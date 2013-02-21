@@ -1,0 +1,16 @@
+@import 'colors';
+
+#users
+{
+  img
+  {
+    width: 100px;
+    height: 100px;
+  }
+
+  td
+  {
+    color: $cell_fg_color;
+    background-color: $cell_bg_color;
+  }
+}
