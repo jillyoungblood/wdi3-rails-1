@@ -13,4 +13,5 @@ class Artist < ActiveRecord::Base
   attr_accessible :name, :image
   has_many :songs
   has_many :albums, :through => :songs
+  validates :name, :uniqueness => true, :presence => true
 end

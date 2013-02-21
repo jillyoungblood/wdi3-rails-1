@@ -1,11 +1,6 @@
 .row
   .five.columns
-    - if @user.errors.any?
-      %ol
-        - @user.errors.full_messages.each do |msg|
-          %li
-            %span.label.alert.radius= msg
-
+    = render(:partial => 'shared/errors', :locals => {:object => @user})
     = form_for @user do |f|
       = f.label :name
       = f.text_field :name, :autofocus => true

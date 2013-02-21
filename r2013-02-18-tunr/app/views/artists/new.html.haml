@@ -1,13 +1,10 @@
 .row
   .five.columns
-    - if @artist.errors.any?
-      %ol
-        - @artist.errors.full_messages.each do |msg|
-          %li
-            %span.label.alert.radius= msg
-
+    = render(:partial => 'shared/errors', :locals => {:object => @artist})
     = form_for @artist do |f|
       = f.label :name
       = f.text_field :name, :autofocus => true
+      = f.label :image
+      = f.text_field :image
       = f.submit nil, :class => 'button radius'
   .seven.columns

@@ -1,7 +1,7 @@
 #users
   %table
     - @users.each do |user|
-      %tr
+      %tr{:class => cycle('row0', 'row1')}
         %td
           - if user.is_admin
             %span.label.alert.radius= user.name

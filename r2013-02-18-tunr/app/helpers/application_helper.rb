@@ -1,4 +1,7 @@
 module ApplicationHelper
+  def is_admin
+    @auth.present? && @auth.is_admin
+  end
   def intellinav
     links = ""
 
