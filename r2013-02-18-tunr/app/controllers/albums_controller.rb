@@ -1,8 +1,21 @@
 class AlbumsController < ApplicationController
   before_filter :check_if_admin, :only => [:new, :create, :edit, :update]
+  before_filter :check_if_user, :only => [:purchase]
 
   def index
     @albums = Album.order(:name)
+  end
+  def show
+    @album = Album.find(params[:id])
+  end
+  def purchase
+    album = Album.find(params[:id])
+    if album.cost(@auth.songs) <= @auth.balance
+      @auth.balance -= album.cost(@auth.songs)
+      @auth.save
+      @auth.albums << album
+    end
+    redirect_to(root_path)
   end
   def new
     @album = Album.new

@@ -6,5 +6,9 @@
       = f.text_field :name, :autofocus => true
       = f.label :image
       = f.text_field :image
+      %p
+        - Song.find(:all, :order => 'LOWER(name)').each do |song|
+          %span= song.name
+          = check_box_tag 'artist[song_ids][]', song.id, song.in?(@artist.songs.to_a)
       = f.submit nil, :class => 'button radius'
   .seven.columns
