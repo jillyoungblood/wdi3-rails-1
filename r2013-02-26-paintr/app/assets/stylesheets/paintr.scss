@@ -11,13 +11,33 @@ input
   width: 300px;
 }
 
+#canvas
+{
+  margin-top: 25px;
+  width: 500px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 3px double black;
+}
+
 .paint
 {
-  width: 5px;
-  height: 5px;
-  margin: 1px;
+  width: 10px;
+  height: 10px;
   float: left;
+  opacity: 0.7;
+}
+
+
+.image_box
+{
+  background-size: cover;
+  float: left;
+  width: 100px;
+  height: 100px;
   border: 1px dashed black;
+  border-radius: 5px;
+  margin: 10px;
 }
 
 .box
