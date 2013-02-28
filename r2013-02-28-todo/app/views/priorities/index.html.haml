@@ -4,3 +4,19 @@
       .priority.color.hide= priority.color
       .priority= priority.name
       .clear
+
+.row
+  .three.columns
+    .controls
+      .new
+        = button_tag 'New Priority', :id => 'new_priority', :class => 'button radius success tiny'
+      .form.hide
+        = form_tag do
+          = text_field_tag 'color', nil, :class => 'minicolors'
+          = label_tag 'name'
+          = text_field_tag 'name'
+          = label_tag 'value'
+          = text_field_tag 'value'
+          = link_to('Cancel', '#', :id=>'cancel_priority', :class => 'button radius tiny alert')
+          = submit_tag 'Create New Priority', :id => 'create_priority', :class => 'button radius tiny'
+  .nine.columns
