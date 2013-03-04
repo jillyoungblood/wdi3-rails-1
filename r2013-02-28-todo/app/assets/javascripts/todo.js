@@ -3,7 +3,10 @@ $(function(){
   $('#new_priority').click(show_new_form);
   $('#cancel_priority').click(hide_form);
   $('#create_priority').click(create_priority);
+  $('#update_priority').click(update_priority);
   $('#priorities').on('click', '.color', edit_priority);
+  $('#priorities').on('click', '.up', up_priority);
+  $('#priorities').on('click', '.down', down_priority);
 
   add_color_boxes();
   init_minicolors();
@@ -15,6 +18,26 @@ $(function(){
 var priorities = [];
 
 // *********************************** //
+
+function up_priority()
+{
+  var id = $(this).parent().siblings('.clear').prev().text();
+  var token = $('input[name=authenticity_token]').val();
+
+  $.ajax({
+    dataType: 'json',
+    type: "post",
+    url: "/priorities/" + id + "/up",
+    data: {authenticity_token:token}
+  }).done(process_priority);
+}
+
+function down_priority()
+{
+  console.log('down');
+  var id = $(this).parent().siblings('.clear').prev().text();
+  console.log(id);
+}
 
 function init_minicolors()
 {
@@ -68,33 +91,33 @@ function create_priority()
       dataType: 'json',
       type: "post",
       url: "/priorities",
-      data: {authenticity_token:token, color:color, name:name, value:value}
+      data: {authenticity_token:token, 'priority[color]':color, 'priority[name]':name, 'priority[value]':value}
     }).done(process_priority);
 
   return false;
 }
 
-// function edit_abc_priority()
-// {
-//   var value = $('#value').val();
-//   var name = $('#name').val();
-//   var color = $('input.minicolors').minicolors('value');
-//   var token = $('input[name=authenticity_token]').val();
-//   var priority_id = $('#priority_id').val();
-
-//   $.ajax({
-//       dataType: 'json',
-//       type: "post",
-//       url: "/priorities",
-//       data: {id:priority_id, authenticity_token:token, color:color, name:name, value:value}
-//     }).done(process_priority);
-
-//   return false;
-// }
-
-function process_priority(priority)
+function update_priority()
 {
-  add_priority_to_array(priority);
+  var value = $('#value').val();
+  var name = $('#name').val();
+  var color = $('input.minicolors').minicolors('value');
+  var token = $('input[name=authenticity_token]').val();
+  var priority_id = $('#priority_id').val();
+
+  $.ajax({
+      dataType: 'json',
+      type: "post",
+      url: "/priorities/" + priority_id,
+      data: {_method:'put', authenticity_token:token, 'priority[color]':color, 'priority[name]':name, 'priority[value]':value}
+    }).done(process_priority);
+
+  return false;
+}
+
+function process_priority(priority_list)
+{
+  _.each(priority_list, add_priority_to_array);
   $('ul#priorities').empty();
   _.each(priorities, display_priority);
 }
@@ -107,19 +130,29 @@ function display_priority(priority)
   var div3 = $('<div>');
   var div4 = $('<div>');
   var div5 = $('<div>');
+  var div6 = $('<div>');
 
-  div1.addClass('priority').addClass('color');
-  div2.addClass('priority');
-  div3.addClass('priority').addClass('hide');
+  var img1 = $('<img>');
+  var img2 = $('<img>');
+  img1.addClass('up');
+  img1.attr('src', '/assets/famfamfam/add.png')
+  img2.addClass('down');
+  img2.attr('src', '/assets/famfamfam/delete.png')
+  div1.append([img1, img2]);
+
+  div1.addClass('priority');
+  div2.addClass('priority').addClass('color');
+  div3.addClass('priority');
   div4.addClass('priority').addClass('hide');
-  div5.addClass('clear');
+  div5.addClass('priority').addClass('hide');
+  div6.addClass('clear');
 
-  div1.css('background-color', priority.color);
-  div2.text(priority.name);
-  div3.text(priority.value);
-  div4.text(priority.id);
+  div2.css('background-color', priority.color);
+  div3.text(priority.name);
+  div4.text(priority.value);
+  div5.text(priority.id);
 
-  li.append([div1, div2, div3, div4, div5]);
+  li.append([div1, div2, div3, div4, div5, div6]);
   $('#priorities').append(li);
 
   hide_form();
@@ -127,6 +160,7 @@ function display_priority(priority)
 
 function add_priority_to_array(priority)
 {
+  priorities = _.reject(priorities, function(p){return p.id == priority.id;});
   priorities.push(priority);
   priorities = _.sortBy(priorities, function(p){ return p.value; }).reverse();
 }
@@ -142,7 +176,7 @@ function show_new_form()
   $('#new_priority').hide();
   $('.form').show();
   $('#create_priority').show();
-  $('#edit_priority').hide();
+  $('#update_priority').hide();
   $('#name').val('');
   $('#value').val('')
   $('input.minicolors').minicolors('value', '#ffffff');
@@ -154,7 +188,7 @@ function show_edit_form()
   $('#new_priority').hide();
   $('.form').show();
   $('#create_priority').hide();
-  $('#edit_priority').show();
+  $('#update_priority').show();
   $('#name').focus();
 }
 

@@ -3,6 +3,9 @@
     %li
       %script
         = "priorities.push({id:#{priority.id}, name:'#{priority.name}', value:#{priority.value}, color:'#{priority.color}'});"
+      .priority
+        = image_tag('famfamfam/add.png', :class => 'up')
+        = image_tag('famfamfam/delete.png', :class => 'down')
       .priority.color.hide= priority.color
       .priority= priority.name
       .priority.hide= priority.value
@@ -24,5 +27,5 @@
           = hidden_field_tag 'priority_id'
           = link_to('Cancel', '#', :id=>'cancel_priority', :class => 'button radius tiny alert')
           = submit_tag 'New Priority', :id => 'create_priority', :class => 'button radius tiny'
-          = submit_tag 'Edit Priority', :id => 'edit_priority', :class => 'button radius tiny success'
+          = submit_tag 'Edit Priority', :id => 'update_priority', :class => 'button radius tiny success'
   .nine.columns
