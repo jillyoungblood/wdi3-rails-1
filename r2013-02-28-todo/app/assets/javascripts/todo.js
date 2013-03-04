@@ -1,6 +1,6 @@
 $(function(){
 
-  $('#new_priority').click(show_form);
+  $('#new_priority').click(show_new_form);
   $('#cancel_priority').click(hide_form);
   $('#create_priority').click(create_priority);
   $('#priorities').on('click', '.color', edit_priority);
@@ -9,6 +9,12 @@ $(function(){
   init_minicolors();
 
 });
+
+// Global Variables
+// *********************************** //
+var priorities = [];
+
+// *********************************** //
 
 function init_minicolors()
 {
@@ -37,7 +43,7 @@ function init_minicolors()
 
 function edit_priority()
 {
-  show_form();
+  show_edit_form();
 
   var color = $(this).css('background-color');
   color = rgb2hex(color);
@@ -52,6 +58,23 @@ function edit_priority()
 }
 
 function create_priority()
+{
+  var value = $('#value').val();
+  var name = $('#name').val();
+  var color = $('input.minicolors').minicolors('value');
+  var token = $('input[name=authenticity_token]').val();
+
+  $.ajax({
+      dataType: 'json',
+      type: "post",
+      url: "/priorities",
+      data: {authenticity_token:token, color:color, name:name, value:value}
+    }).done(display_priority);
+
+  return false;
+}
+
+function edit_abc_priority()
 {
   var value = $('#value').val();
   var name = $('#name').val();
@@ -101,10 +124,25 @@ function hide_form()
   $('.form').hide();
 }
 
-function show_form()
+function show_new_form()
 {
   $('#new_priority').hide();
   $('.form').show();
+  $('#create_priority').show();
+  $('#edit_priority').hide();
+  $('#name').val('');
+  $('#value').val('')
+  $('input.minicolors').minicolors('value', '#ffffff');
+  $('#name').focus();
+}
+
+function show_edit_form()
+{
+  $('#new_priority').hide();
+  $('.form').show();
+  $('#create_priority').hide();
+  $('#edit_priority').show();
+  $('#name').focus();
 }
 
 function add_color_boxes()
