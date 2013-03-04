@@ -4,4 +4,5 @@
 //= require 'foundation/javascripts/foundation.min.js'
 //= require 'foundation/javascripts/app.js'
 //= require 'minicolors/jquery.minicolors.js'
+//= require 'underscore-min.js'
 //= require 'todo'

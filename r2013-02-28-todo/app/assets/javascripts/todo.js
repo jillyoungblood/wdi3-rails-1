@@ -69,30 +69,37 @@ function create_priority()
       type: "post",
       url: "/priorities",
       data: {authenticity_token:token, color:color, name:name, value:value}
-    }).done(display_priority);
+    }).done(process_priority);
 
   return false;
 }
 
-function edit_abc_priority()
+// function edit_abc_priority()
+// {
+//   var value = $('#value').val();
+//   var name = $('#name').val();
+//   var color = $('input.minicolors').minicolors('value');
+//   var token = $('input[name=authenticity_token]').val();
+//   var priority_id = $('#priority_id').val();
+
+//   $.ajax({
+//       dataType: 'json',
+//       type: "post",
+//       url: "/priorities",
+//       data: {id:priority_id, authenticity_token:token, color:color, name:name, value:value}
+//     }).done(process_priority);
+
+//   return false;
+// }
+
+function process_priority(priority)
 {
-  var value = $('#value').val();
-  var name = $('#name').val();
-  var color = $('input.minicolors').minicolors('value');
-  var token = $('input[name=authenticity_token]').val();
-  var priority_id = $('#priority_id').val();
-
-  $.ajax({
-      dataType: 'json',
-      type: "post",
-      url: "/priorities",
-      data: {id:priority_id, authenticity_token:token, color:color, name:name, value:value}
-    }).done(display_priority);
-
-  return false;
+  add_priority_to_array(priority);
+  $('ul#priorities').empty();
+  _.each(priorities, display_priority);
 }
 
-function display_priority(message)
+function display_priority(priority)
 {
   var li = $('<li>');
   var div1 = $('<div>');
@@ -107,15 +114,21 @@ function display_priority(message)
   div4.addClass('priority').addClass('hide');
   div5.addClass('clear');
 
-  div1.css('background-color', message.color);
-  div2.text(message.name);
-  div3.text(message.value);
-  div4.text(message.id);
+  div1.css('background-color', priority.color);
+  div2.text(priority.name);
+  div3.text(priority.value);
+  div4.text(priority.id);
 
   li.append([div1, div2, div3, div4, div5]);
   $('#priorities').append(li);
 
   hide_form();
+}
+
+function add_priority_to_array(priority)
+{
+  priorities.push(priority);
+  priorities = _.sortBy(priorities, function(p){ return p.value; }).reverse();
 }
 
 function hide_form()
