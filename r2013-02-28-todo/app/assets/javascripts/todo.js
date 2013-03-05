@@ -13,12 +13,6 @@ $(function(){
 
 });
 
-// Global Variables
-// *********************************** //
-var priorities = [];
-
-// *********************************** //
-
 function up_priority()
 {
   var id = $(this).parent().siblings('.clear').prev().text();
@@ -34,9 +28,15 @@ function up_priority()
 
 function down_priority()
 {
-  console.log('down');
   var id = $(this).parent().siblings('.clear').prev().text();
-  console.log(id);
+  var token = $('input[name=authenticity_token]').val();
+
+  $.ajax({
+    dataType: 'json',
+    type: "post",
+    url: "/priorities/" + id + "/down",
+    data: {authenticity_token:token}
+  }).done(process_priority);
 }
 
 function init_minicolors()
