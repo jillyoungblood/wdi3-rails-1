@@ -19,7 +19,7 @@
     .controls
       .new
         = button_tag 'New Priority', :id => 'new_priority', :class => 'button radius success tiny'
-      .form.hide
+      .priorityform.hide
         = form_tag do
           = text_field_tag 'color', nil, :class => 'minicolors'
           = label_tag 'name'

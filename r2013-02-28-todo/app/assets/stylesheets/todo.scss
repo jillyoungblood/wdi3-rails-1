@@ -3,6 +3,19 @@ li
   list-style-type: none;
 }
 
+#map_canvas
+{
+  width: 900px;
+  height: 300px;
+  border: 1px solid black;
+  margin-bottom: 15px;
+}
+
+ul#tasks
+{
+  margin-top: 10px;
+}
+
 .hide
 {
   display: hidden;

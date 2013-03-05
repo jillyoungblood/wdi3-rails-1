@@ -12,9 +12,9 @@ p3 = Priority.create(:name => 'p750', :color => '#0000ff', :value => 750)
 p4 = Priority.create(:name => 'p690', :color => '#ff33cc', :value => 690)
 p5 = Priority.create(:name => 'p775', :color => '#ff90ff', :value => 775)
 
-t1 = Task.create(:title => 'Get milk', :description => 'Need milk now', :duedate => '3/3/2010', :is_complete => true)
-t2 = Task.create(:title => 'Get bread', :description => 'No bread at home', :duedate => '1/9/2011')
-t3 = Task.create(:title => 'Get laundry', :description => 'Dirty clothes!', :duedate => '5/2/2014')
+t1 = Task.create(:address => '10 East 21st Street NYC', :title => 'Get milk', :description => 'Need milk now', :duedate => '3/3/2010', :is_complete => true)
+t2 = Task.create(:address => 'Paris, France', :title => 'Get bread', :description => 'No bread at home', :duedate => '1/9/2011')
+t3 = Task.create(:address => 'London, England', :title => 'Get laundry', :description => 'Dirty clothes!', :duedate => '5/2/2014')
 
 t1.priority = p1
 t1.save
