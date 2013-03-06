@@ -27,9 +27,18 @@
           = submit_tag 'Edit Task', :id => 'update_task', :class => 'button radius tiny success'
   .nine.columns
 
+%script
+  var tasks = [];
 %ul#tasks
   - @tasks.each do |task|
     %li
       %script
         = "add_marker(#{task.latitude}, #{task.longitude}, '#{task.title}');"
-    %li= task.title
+        = "tasks.push({priority:{color:'#{task.priority.color}', value:#{task.priority.value}}, id:#{task.id}, title:'#{task.title}', is_complete:#{task.is_complete}, latitude:#{task.latitude}, longitude:#{task.longitude}});"
+      .task= check_box_tag nil, nil, task.is_complete
+      .task.color.hide= task.priority.color
+      .task= link_to('Delete', '#', :class => 'delete_task button radius alert tiny')
+      .task= link_to('Edit', '#', :class => 'edit_task button radius tiny')
+      .task= task.title
+      .task.hide= task.id
+      .clear

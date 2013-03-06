@@ -21,9 +21,10 @@ ul#tasks
   display: hidden;
 }
 
-.priority
+.priority, .task
 {
   float: left;
+  margin-left: 5px;
 }
 
 .color

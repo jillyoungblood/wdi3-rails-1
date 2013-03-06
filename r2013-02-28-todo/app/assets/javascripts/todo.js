@@ -1,4 +1,5 @@
 var map;
+var markers = [];
 
 $(function(){
 
@@ -16,7 +17,12 @@ $(function(){
   $('#priorities').on('click', '.up', up_priority);
   $('#priorities').on('click', '.down', down_priority);
 
+  $('#tasks').on('click', '.delete_task', delete_task);
+  $('#tasks').on('click', '.edit_task', edit_task);
+  $('#tasks').on('click', 'input[type=checkbox]', complete_task);
+
   add_color_boxes();
+  display_tasks();
   init_minicolors();
 
 });

@@ -4,7 +4,11 @@ R20130228Todo::Application.routes.draw do
   get '/login' => 'session#new'
   post '/login' => 'session#create'
   delete '/login' => 'session#destroy'
-  resources :tasks, :only => [:index, :create]
+  resources :tasks, :only => [:index, :show, :create, :update, :destroy] do
+    member do
+      put :complete
+    end
+  end
   resources :priorities, :only => [:index, :create, :update] do
     member do
       post :up
