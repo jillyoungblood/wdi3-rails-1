@@ -6,9 +6,9 @@
     .float
       = button_tag 'Chart', :class => 'button radius tiny', :id => 'show_chart'
     .float
-      = select_tag 'a', options_for_select(@activities.map{ |a| [a, a] })
+      = select_tag 'activities', options_for_select(@activities.map{ |a| [a, a] })
     .clear
   .large-8.columns
 
+#chart
 %ol#exercises
-  = render(:partial => 'exercises')
