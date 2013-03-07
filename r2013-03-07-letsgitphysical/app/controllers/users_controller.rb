@@ -7,6 +7,11 @@ class UsersController < ApplicationController
   end
   def create
     User.create(params[:user])
-    redirect_to(users_path)
+    @users = User.order(:email)
+
+    respond_to do |format|
+      format.html { redirect_to(users_path) }
+      format.js
+    end
   end
 end
