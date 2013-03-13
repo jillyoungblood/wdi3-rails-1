@@ -1,9 +1,11 @@
 class SubscribersController < ApplicationController
   def new
-    @subscriber = Subscriber.new
+    @user = User.new
   end
 
   def create
-    Subscriber.create(params[:subscriber])
+    user = User.create(params[:user])
+    subscriber = Subscriber.create
+    subscriber.user = user
   end
 end
